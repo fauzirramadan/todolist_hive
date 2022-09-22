@@ -28,12 +28,16 @@ class ToDoTile extends StatelessWidget {
               activeColor: Colors.black,
             ),
             // task name
-            Text(
-              taskName,
-              style: TextStyle(
-                  decoration: isCompleted
-                      ? TextDecoration.lineThrough
-                      : TextDecoration.none),
+            Flexible(
+              child: Text(
+                taskName,
+                style: TextStyle(
+                    overflow: TextOverflow.ellipsis,
+                    decoration: isCompleted
+                        ? TextDecoration.lineThrough
+                        : TextDecoration.none),
+                maxLines: 2,
+              ),
             ),
           ],
         ),

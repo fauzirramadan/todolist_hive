@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:todolist_hive/utils/dialog_box.dart';
 
 import '../utils/todo_tile.dart';
 
@@ -10,6 +11,15 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  // text controller
+  final _controller = TextEditingController();
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
   // list todo
   List toDoList = [
     ["bersih rumah", true],
@@ -21,6 +31,25 @@ class _HomePageState extends State<HomePage> {
     setState(() {
       toDoList[index][1] = !toDoList[index][1];
     });
+  }
+
+  // save new task
+  void saveNewTask() {
+    setState(() {
+      toDoList.add([_controller.text, false]);
+      _controller.clear();
+    });
+    Navigator.pop(context);
+  }
+
+  // create a new task
+  void createNewTask() {
+    showDialog(
+        context: context,
+        builder: (_) => DialogBox(
+              controller: _controller,
+              onSave: saveNewTask,
+            ));
   }
 
   @override
@@ -36,7 +65,7 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: createNewTask,
         child: const Icon(Icons.add),
       ),
       body: ListView.builder(
