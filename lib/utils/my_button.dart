@@ -11,7 +11,10 @@ class MyButton extends StatelessWidget {
       height: 30,
       color: Theme.of(context).primaryColor,
       onPressed: onPressed,
-      child: Text(text),
+      child: Text(
+        text,
+        style: const TextStyle(color: Colors.white),
+      ),
     );
   }
 }

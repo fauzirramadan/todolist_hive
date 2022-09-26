@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:todolist_hive/utils/colors.dart';
 
 class ToDoTile extends StatelessWidget {
   final String taskName;
@@ -33,7 +34,7 @@ class ToDoTile extends StatelessWidget {
         child: Container(
           padding: const EdgeInsets.all(20),
           decoration: BoxDecoration(
-              color: Colors.yellow, borderRadius: BorderRadius.circular(12)),
+              color: color2, borderRadius: BorderRadius.circular(12)),
           child: Row(
             children: [
               // checkbox
@@ -47,6 +48,8 @@ class ToDoTile extends StatelessWidget {
                 child: Text(
                   taskName,
                   style: TextStyle(
+                      fontSize: 15,
+                      color: textColor,
                       overflow: TextOverflow.ellipsis,
                       decoration: isCompleted
                           ? TextDecoration.lineThrough
