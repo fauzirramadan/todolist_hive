@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
+import 'package:todolist_hive/database/database.dart';
 import 'package:todolist_hive/utils/colors.dart';
 import 'package:todolist_hive/utils/dialog_box.dart';
 
@@ -16,32 +18,44 @@ class _HomePageState extends State<HomePage> {
   final _controller = TextEditingController();
   final _keyForm = GlobalKey<FormState>();
 
+  // reference database
+  final _myBox = Hive.box('mybox');
+
+  ToDoDatabase db = ToDoDatabase();
+
   @override
   void dispose() {
     _controller.dispose();
     super.dispose();
   }
 
-  // list todo
-  List toDoList = [
-    ["bersih rumah", true],
-    ["belajar", false]
-  ];
+  @override
+  void initState() {
+    if (_myBox.get("TODOLIST") == null) {
+      db.createInitialData();
+    } else {
+      db.loadData();
+    }
+
+    super.initState();
+  }
 
   // checkbox ontapped
   void checkBoxChanged(bool? value, int index) {
     setState(() {
-      toDoList[index][1] = !toDoList[index][1];
+      db.toDoList[index][1] = !db.toDoList[index][1];
     });
+    db.updateDatabase();
   }
 
   // save new task
   void saveNewTask() {
     if (_keyForm.currentState!.validate()) {
       setState(() {
-        toDoList.add([_controller.text, false]);
+        db.toDoList.add([_controller.text, false]);
         _controller.clear();
       });
+      db.updateDatabase();
       Navigator.pop(context);
     }
   }
@@ -60,8 +74,9 @@ class _HomePageState extends State<HomePage> {
   // delete task
   void deleteTask(int index) {
     setState(() {
-      toDoList.removeAt(index);
+      db.toDoList.removeAt(index);
     });
+    db.updateDatabase();
   }
 
   @override
@@ -96,22 +111,22 @@ class _HomePageState extends State<HomePage> {
         onPressed: createNewTask,
         child: const Icon(Icons.add),
       ),
-      body: toDoList.isEmpty
+      body: db.toDoList.isEmpty
           ? Center(
               child: SizedBox(
                 width: MediaQuery.of(context).size.width * 0.8,
                 child: const Text(
-                  "Pencet tombol dibawah ya cantik untuk nambahin todo list nya",
+                  "NO TASK",
                   textAlign: TextAlign.center,
                 ),
               ),
             )
           : ListView.builder(
-              itemCount: toDoList.length,
+              itemCount: db.toDoList.length,
               itemBuilder: (context, index) {
                 return ToDoTile(
-                  taskName: toDoList[index][0],
-                  isCompleted: toDoList[index][1],
+                  taskName: db.toDoList[index][0],
+                  isCompleted: db.toDoList[index][1],
                   onChanged: (value) => checkBoxChanged(value, index),
                   deleteTask: (context) => deleteTask(index),
                 );

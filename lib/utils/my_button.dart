@@ -8,7 +8,10 @@ class MyButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialButton(
-      height: 30,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(12),
+      ),
+      height: 40,
       color: Theme.of(context).primaryColor,
       onPressed: onPressed,
       child: Text(

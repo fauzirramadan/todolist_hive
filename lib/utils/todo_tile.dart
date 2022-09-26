@@ -48,7 +48,6 @@ class ToDoTile extends StatelessWidget {
                 child: Text(
                   taskName,
                   style: TextStyle(
-                      fontSize: 15,
                       color: textColor,
                       overflow: TextOverflow.ellipsis,
                       decoration: isCompleted
