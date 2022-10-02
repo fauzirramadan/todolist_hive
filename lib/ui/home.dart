@@ -93,7 +93,7 @@ class _HomePageState extends State<HomePage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: const [
             Text(
-              "Ara's Todo",
+              "Nelaa's Todo",
               style: TextStyle(fontWeight: FontWeight.w600, color: textColor),
             ),
             SizedBox(
