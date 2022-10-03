@@ -85,9 +85,10 @@ class _HomePageState extends State<HomePage> {
       backgroundColor: color1,
       appBar: AppBar(
         shape: const RoundedRectangleBorder(
-            borderRadius: BorderRadius.only(
-                bottomLeft: Radius.circular(40),
-                bottomRight: Radius.circular(40))),
+          borderRadius: BorderRadius.only(
+              bottomLeft: Radius.circular(40),
+              bottomRight: Radius.circular(40)),
+        ),
         elevation: 0,
         title: Row(
           mainAxisAlignment: MainAxisAlignment.center,
